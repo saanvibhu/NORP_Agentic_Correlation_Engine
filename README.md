@@ -82,7 +82,8 @@ The next step is to begin collecting datasets and implementing the agent pipelin
 ## Team Members
 
 - Saanvi Bhumpalle
-- [Team Member Name]
+- Tanya Kharuna
+- Zaara Syeda
 
 ## Repository
 
