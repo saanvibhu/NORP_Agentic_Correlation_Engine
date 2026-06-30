@@ -1,0 +1,26 @@
+organization_id,nonprofit_name,funding,revenue,volunteer_hours,city,state,zip_code
+ORG001,Atlanta Community,250000,310000,1200,Atlanta,Ga,30301
+ORG002,Hope Education Initiative,180000,195000,980,"Atlanta, GA",Ga,30302
+ORG003,Urban Health Alliance,420000,445000,2100,Atlanta,Ga,30303
+ORG004,Green Future Collective,95000,88000,450,Savannah,Georgia,31401
+ORG005,Coastal Literacy Project,120000,115000,720,Savannah,Ga,31402
+ORG006,Metro Food Bank,380000,402000,1850,Atlanta,Ga,30304
+ORG007,Youth Empowerment Network,210000,225000,1100,Augusta,Ga,30901
+ORG008,Arts For All,75000,82000,380,Columbus,Georgia,31901
+ORG009,Rural Outreach Partners,65000,58000,290,Macon,Ga,31201
+ORG010,Civic Engagement League,155000,168000,840,Athens,Ga,30601
+ORG011,Family Support Services,290000,305000,1420,Atlanta,Ga,30305
+ORG012,Stem Access,175000,190000,910,Roswell,Georgia,30075
+ORG013,Environmental Action Group,88000,92000,410,Marietta,Ga,30060
+ORG014,Community Wellness Hub,340000,358000,1680,Sandy Springs,Ga,30328
+ORG015,Neighborhood Builders,110000,105000,580,Decatur,Ga,30030
+ORG016,Justice And Equity Fund,265000,280000,1290,Atlanta,Ga,30306
+ORG017,Creative Youth Studio,92000,87000,430,Gainesville,Ga,30501
+ORG018,Senior Care Alliance,198000,210000,970,Albany,Georgia,31701
+ORG019,Workforce Development,145000,152000,690,Warner Robins,Ga,31088
+ORG020,Refugee Support Network,132000,128000,610,Clarkston,Ga,30021
+ORG021,Peachtree Literacy Fund,88000,91000,420,Peachtree City,Ga,30269
+ORG022,Healthy Communities,225000,238000,1080,Lawrenceville,Ga,30043
+ORG023,Animal Rescue Coalition,68000,72000,320,Athens,Ga,30602
+ORG024,Cultural Heritage Trust,115000,118000,540,Macon,Ga,31202
+ORG025,Disaster Relief Georgia,310000,325000,1510,Atlanta,Ga,30307
