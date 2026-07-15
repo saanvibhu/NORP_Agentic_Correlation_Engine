@@ -1,0 +1,34 @@
+{
+  "research_question": "What factors are most correlated with nonprofit success, funding growth, volunteer retention, and community impact?",
+  "findings": [
+    "Median Income is strongly positively correlated with Education Pct (r = 1.00, p = 0.0000).",
+    "Retention Rate is strongly positively correlated with Engagement Score (r = 1.00, p = 0.0000).",
+    "Funding is strongly positively correlated with Volunteer Hours (r = 1.00, p = 0.0000).",
+    "Funding is strongly positively correlated with Revenue (r = 1.00, p = 0.0000).",
+    "Revenue is strongly positively correlated with Volunteer Hours (r = 0.99, p = 0.0000).",
+    "Median Income is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
+    "Education Pct is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
+    "Unemployment Rate is strongly positively correlated with Population (r = 0.97, p = 0.0000).",
+    "Higher educational attainment is associated with improved volunteer retention. Observed correlation: r = 0.96 (~96% explained variance).",
+    "Retention Rate is strongly positively correlated with Median Income (r = 0.95, p = 0.0000)."
+  ],
+  "hypotheses_generated": [
+    "Does median household income affect educational attainment?",
+    "Does median household income affect local unemployment rate?",
+    "Does median household income affect population density?",
+    "Does median household income affect volunteer engagement?",
+    "Does median household income affect volunteer retention?",
+    "Does educational attainment affect local unemployment rate?",
+    "Does educational attainment affect population density?",
+    "Does educational attainment affect volunteer engagement?",
+    "Does educational attainment affect volunteer retention?",
+    "Does local unemployment rate affect population density?",
+    "Does local unemployment rate affect volunteer engagement?",
+    "Does local unemployment rate affect volunteer retention?",
+    "Does population density affect volunteer engagement?",
+    "Does population density affect volunteer retention?",
+    "Does volunteer engagement affect volunteer retention?"
+  ],
+  "llm_summary": null,
+  "finding_count": 10
+}
