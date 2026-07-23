@@ -180,6 +180,10 @@ class CleaningAgent:
         irs_df: pd.DataFrame | None = None,
     ) -> AgentResult:
         raw_path = resolve_raw_path(spec, self.raw_dir)
+        if not raw_path.exists() and not self.use_real_data:
+            processed_path = self.processed_dir / spec.processed_name
+            if processed_path.exists():
+                raw_path = processed_path
         if not raw_path.exists() and spec.name != "volunteer_cps":
             return AgentResult(
                 agent="cleaning",
@@ -223,6 +227,10 @@ class CleaningAgent:
 
     def clean_file(self, filename: str) -> AgentResult:
         src = self.raw_dir / filename
+        if not src.exists() and not self.use_real_data:
+            processed_src = self.processed_dir / filename
+            if processed_src.exists():
+                src = processed_src
         if not src.exists():
             return AgentResult(
                 agent="cleaning",

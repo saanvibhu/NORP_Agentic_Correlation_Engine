@@ -1,0 +1,8 @@
+minimum_rows: 10
+maximum_missing_percentage: 20.0
+maximum_duplicate_percentage: 10.0
+minimum_join_success_rate: 70.0
+minimum_correlation_magnitude: 0.3
+significance_threshold: 0.05
+minimum_sample_size: 10
+top_ranked_findings: 20

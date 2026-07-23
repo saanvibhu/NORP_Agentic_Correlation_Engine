@@ -41,6 +41,16 @@ def load_merged() -> pd.DataFrame | None:
     return None
 
 
+@st.cache_data
+def load_pair_frame(x: str, y: str) -> pd.DataFrame | None:
+    """Find the processed sample frame that contains a selected pair."""
+    for path in sorted(PROCESSED.glob("*.csv")):
+        frame = pd.read_csv(path)
+        if x in frame.columns and y in frame.columns:
+            return frame
+    return None
+
+
 def render_correlation_heatmap(matrix: dict | None) -> None:
     if not matrix:
         st.info("Run the pipeline to generate correlation heatmap data.")
@@ -73,6 +83,7 @@ def main() -> None:
 
     pipeline = load_json(OUTPUTS / "pipeline_results.json")
     correlations = load_json(OUTPUTS / "correlations.json")
+    ranked = load_json(OUTPUTS / "ranked_correlations.json")
     insights = load_json(OUTPUTS / "insights.json")
     validation = load_json(PROCESSED / "validation_report.json")
     merged = load_merged()
@@ -116,13 +127,20 @@ def main() -> None:
             if validation.get("join_metrics"):
                 st.subheader("Cross-Dataset Join Success")
                 st.json(validation["join_metrics"])
+        if validation:
+            passed = sum(1 for report in validation.get("reports", []) if report.get("passed"))
+            failed = len(validation.get("reports", [])) - passed
+            st.metric("Validated datasets", passed)
+            st.metric("Rejected datasets", failed)
 
         st.subheader(f"Processed Datasets ({state_label})")
-        for name in REAL_PROCESSED:
-            path = PROCESSED / name
-            if path.exists():
-                with st.expander(name):
-                    st.dataframe(pd.read_csv(path), use_container_width=True)
+        available_datasets = sorted(path.name for path in PROCESSED.glob("*.csv"))
+        if available_datasets:
+            selected_dataset = st.selectbox("Dataset", available_datasets)
+            selected_path = PROCESSED / selected_dataset
+            st.dataframe(pd.read_csv(selected_path), use_container_width=True)
+        else:
+            st.info("No processed datasets are available yet.")
 
         if merged is not None:
             st.subheader("Merged County Frame (used for correlations)")
@@ -130,18 +148,37 @@ def main() -> None:
 
     with tab_correlations:
         if correlations:
+            minimum_correlation = st.slider("Minimum correlation magnitude", 0.0, 1.0, 0.3, 0.05)
+            significant_only = st.checkbox("Significance only", value=True)
             mode = correlations.get("mode", "unknown")
             st.caption(f"Analysis mode: {mode} | Counties: {correlations.get('merged_counties', '—')}")
 
-            top = correlations.get("top_correlations", [])[:10]
+            top = (ranked or {}).get("ranked_correlations", [])
+            if not top:
+                top = correlations.get("all_correlations", [])
+            top = [item for item in top if abs(float(item.get("correlation_coefficient", item.get("pearson_r", 0)))) >= minimum_correlation]
+            if significant_only:
+                top = [item for item in top if item.get("significant", True)]
+            top = top[:10]
             if top:
                 st.dataframe(pd.DataFrame(top), use_container_width=True)
 
+                pair_labels = [f"{item.get('variable_1', item.get('variable_x'))} vs {item.get('variable_2', item.get('variable_y'))}" for item in top]
+                selected_pair = st.selectbox("Variable pair", pair_labels)
+                selected = top[pair_labels.index(selected_pair)]
+                selected_x = selected.get("variable_1", selected.get("variable_x"))
+                selected_y = selected.get("variable_2", selected.get("variable_y"))
+                pair_frame = load_pair_frame(selected_x, selected_y)
+                if pair_frame is not None:
+                    render_scatter(pair_frame, selected_x, selected_y, color="state_abbr")
+                else:
+                    st.info("No processed dataset contains both selected variables.")
+
                 fig = go.Figure()
                 fig.add_trace(go.Bar(
-                    x=[f"{r['variable_x']} ↔ {r['variable_y']}" for r in top],
-                    y=[r["pearson_r"] for r in top],
-                    marker_color=["#2ecc71" if r["pearson_r"] > 0 else "#e74c3c" for r in top],
+                    x=[f"{r.get('variable_1', r.get('variable_x'))} ↔ {r.get('variable_2', r.get('variable_y'))}" for r in top],
+                    y=[r.get("correlation_coefficient", r.get("pearson_r")) for r in top],
+                    marker_color=["#2ecc71" if r.get("correlation_coefficient", r.get("pearson_r")) > 0 else "#e74c3c" for r in top],
                 ))
                 fig.update_layout(title="Top Significant Correlations", yaxis_title="Pearson r")
                 st.plotly_chart(fig, use_container_width=True)
@@ -166,12 +203,26 @@ def main() -> None:
             st.info("Run the pipeline to compute correlations.")
 
     with tab_findings:
-        report_path = OUTPUTS / "research_report.md"
-        if report_path.exists():
-            st.markdown(report_path.read_text(encoding="utf-8"))
-        elif insights:
-            for i, finding in enumerate(insights.get("findings", []), 1):
-                st.write(f"{i}. {finding}")
+        if insights and insights.get("findings"):
+            st.subheader("Generated Insights")
+            for index, finding in enumerate(insights["findings"], 1):
+                if isinstance(finding, str):
+                    with st.expander(f"Finding {index}"):
+                        st.write(finding)
+                    continue
+                title = finding.get("finding", f"Finding {index}")
+                with st.expander(title, expanded=index == 1):
+                    st.write(finding.get("statistical_evidence", "Evidence unavailable"))
+                    st.write(finding.get("interpretation", "Interpretation unavailable"))
+                    st.caption(f"Confidence: {finding.get('confidence', 'unknown')}")
+                    st.warning(finding.get("limitations", "Limitations unavailable"))
+                    st.caption(finding.get("correlation_causation_reminder", "Correlation does not imply causation."))
+        else:
+            report_path = OUTPUTS / "research_report.md"
+            if report_path.exists():
+                st.markdown(report_path.read_text(encoding="utf-8"))
+            else:
+                st.info("Run the sample pipeline to generate findings.")
 
         st.divider()
         col_a, col_b = st.columns(2)
@@ -183,13 +234,14 @@ def main() -> None:
             )
         with col_b:
             sync_mb = st.checkbox("Sync NORP Metabase first", value=False)
+        use_sample = st.checkbox("Use checked-in sample data", value=True)
 
         if st.button("Run Pipeline"):
             with st.spinner("Running full agent pipeline..."):
                 from run_pipeline import run_pipeline
                 run_pipeline(
                     skip_insight_llm=True,
-                    use_real_data=True,
+                    use_real_data=not use_sample,
                     state_filter=run_state,
                     sync_metabase=sync_mb,
                 )

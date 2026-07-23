@@ -124,24 +124,34 @@ class InsightAgent:
 
         with path.open(encoding="utf-8") as f:
             data = json.load(f)
-
-        top = data.get("top_correlations", data.get("all_correlations", []))[:15]
+        ranked_path = OUTPUTS_DIR / "ranked_correlations.json"
+        ranked_data = json.loads(ranked_path.read_text(encoding="utf-8")) if ranked_path.exists() else {"ranked_correlations": []}
+        top = ranked_data.get("ranked_correlations", [])[:15]
         seen: set[tuple[str, str]] = set()
-        findings: list[str] = []
+        findings: list[dict] = []
         for r in top:
-            key = tuple(sorted((r["variable_x"], r["variable_y"])))
+            key = tuple(sorted((r["variable_1"], r["variable_2"])))
             if key in seen:
                 continue
             seen.add(key)
-            findings.append(self._sociological_framing(r))
+            correlation = r["correlation_coefficient"]
+            p_value = r.get("p_value")
+            findings.append({
+                "finding": f"{r['variable_1'].replace('_', ' ').title()} is {'positively' if correlation > 0 else 'negatively'} associated with {r['variable_2'].replace('_', ' ').title()}.",
+                "statistical_evidence": f"Correlation coefficient = {correlation:.4f}; p-value = {p_value if p_value is not None else 'not available'}; sample size = {r['sample_size']}.",
+                "interpretation": self._sociological_framing({"variable_x": r["variable_1"], "variable_y": r["variable_2"], "pearson_r": correlation, "pearson_p": p_value or 1.0}),
+                "confidence": r["confidence_category"],
+                "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+                "correlation_causation_reminder": "Correlation does not imply causation.",
+            })
 
         columns = set()
         for r in top:
-            columns.add(r["variable_x"])
-            columns.add(r["variable_y"])
+            columns.add(r["variable_1"])
+            columns.add(r["variable_2"])
         hypotheses = self.generate_hypotheses(list(columns))
 
-        llm_summary = self._llm_enhance(findings)
+        llm_summary = self._llm_enhance([item["finding"] for item in findings])
 
         report = {
             "research_question": (
@@ -152,23 +162,46 @@ class InsightAgent:
             "hypotheses_generated": hypotheses,
             "llm_summary": llm_summary,
             "finding_count": len(findings),
+            "approved_correlation_count": len(top),
         }
 
         md_lines = [
             "# Sociological Correlation Discovery Report",
+            "",
+            "## Project Overview",
+            "This report summarizes statistically evaluated relationships discovered by the sample-data correlation pipeline.",
             "",
             "## Research Question",
             report["research_question"],
             "",
             "## Key Findings",
         ]
+        md_lines.extend(["", "## Datasets Used", "Validated datasets supplied by the deterministic pipeline gate."])
+        md_lines.extend(["", "## Top Ranked Correlations"])
+        for item in top:
+            md_lines.append(f"{item['rank']}. {item['variable_1']} vs {item['variable_2']}: r={item['correlation_coefficient']:.4f}, p={item.get('p_value')}, n={item['sample_size']}")
+        md_lines.extend(["", "## Generated Interpretations"])
         for i, finding in enumerate(findings, 1):
-            md_lines.append(f"{i}. {finding}")
+            md_lines.append(f"{i}. {finding['finding']} {finding['interpretation']}")
+            md_lines.append(f"   Evidence: {finding['statistical_evidence']} Confidence: {finding['confidence']}.")
+            md_lines.append(f"   Limitation: {finding['limitations']} {finding['correlation_causation_reminder']}")
 
         if hypotheses:
             md_lines.extend(["", "## Generated Hypotheses"])
             for h in hypotheses:
                 md_lines.append(f"- {h}")
+
+        md_lines.extend([
+            "",
+            "## Validation Summary",
+            "Only datasets accepted by the deterministic validation gate were used.",
+            "",
+            "## Limitations",
+            "Results are based on sample data and observational correlations. Missing variables, confounding factors, and small sample sizes may affect interpretation.",
+            "",
+            "## Future Improvements",
+            "Add real IRS, Census, and CDC ingestion, stronger multiple-testing controls, and longitudinal causal analysis.",
+        ])
 
         if llm_summary:
             md_lines.extend(["", "## AI Research Summary", llm_summary])

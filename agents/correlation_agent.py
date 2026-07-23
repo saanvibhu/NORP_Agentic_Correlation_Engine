@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from scipy import stats
 from sklearn.feature_selection import mutual_info_regression
 
 from agents.base import DATA_PROCESSED, OUTPUTS_DIR, AgentResult, load_csv, save_json, setup_logger
+from agents.config import PipelineConfig, load_config
 from agents.dataset_registry import JOIN_KEY, REAL_DATASETS, STATE_KEY
 
 logger = setup_logger(__name__)
@@ -29,6 +31,8 @@ class CorrelationResult:
     mutual_information: float
     regression_coef: float | None = None
     regression_r_squared: float | None = None
+    sample_size: int = 0
+    pearson_ci: list[float] | None = None
     significant: bool = False
 
     def to_dict(self) -> dict:
@@ -42,6 +46,8 @@ class CorrelationResult:
             "mutual_information": self.mutual_information,
             "regression_coef": self.regression_coef,
             "regression_r_squared": self.regression_r_squared,
+            "sample_size": self.sample_size,
+            "pearson_ci": self.pearson_ci,
             "significant": self.significant,
         }
 
@@ -52,20 +58,24 @@ class CorrelationAgent:
     def __init__(
         self,
         processed_dir: Path | None = None,
-        significance_level: float = 0.05,
-        min_abs_correlation: float = 0.3,
+        significance_level: float | None = None,
+        min_abs_correlation: float | None = None,
         use_real_data: bool = True,
         states: list[str] | None = None,
+        config: PipelineConfig | None = None,
     ):
         self.processed_dir = processed_dir or DATA_PROCESSED
-        self.significance_level = significance_level
-        self.min_abs_correlation = min_abs_correlation
+        self.config = config or load_config()
+        self.significance_level = significance_level if significance_level is not None else self.config.significance_threshold
+        self.min_abs_correlation = min_abs_correlation if min_abs_correlation is not None else self.config.minimum_correlation_magnitude
         self.use_real_data = use_real_data
         self.states = states
+        self.minimum_sample_size = max(2, self.config.minimum_sample_size)
 
     def _pairwise_analysis(self, df: pd.DataFrame, col_x: str, col_y: str) -> CorrelationResult | None:
         subset = df[[col_x, col_y]].dropna()
-        if len(subset) < 10:
+        sample_size = len(subset)
+        if sample_size < self.minimum_sample_size:
             return None
 
         x = subset[col_x].values
@@ -77,10 +87,19 @@ class CorrelationAgent:
         x_const = sm.add_constant(x)
         model = sm.OLS(y, x_const).fit()
         coef = float(model.params[1]) if len(model.params) > 1 else None
+        pearson_ci = None
+        if sample_size > 3 and abs(float(pearson_r)) < 1:
+            fisher_z = float(stats.norm.ppf(0.975)) / (sample_size - 3) ** 0.5
+            transformed = float(math.atanh(float(pearson_r)))
+            pearson_ci = [
+                round(float(math.tanh(transformed - fisher_z)), 4),
+                round(float(math.tanh(transformed + fisher_z)), 4),
+            ]
 
         significant = (
-            pearson_p < self.significance_level
+            pearson_p <= self.significance_level
             and abs(pearson_r) >= self.min_abs_correlation
+            and sample_size >= self.minimum_sample_size
         )
 
         return CorrelationResult(
@@ -93,11 +112,17 @@ class CorrelationAgent:
             mutual_information=round(float(mi), 4),
             regression_coef=round(coef, 4) if coef is not None else None,
             regression_r_squared=round(float(model.rsquared), 4),
+            sample_size=sample_size,
+            pearson_ci=pearson_ci,
             significant=significant,
         )
 
     def analyze_dataframe(self, df: pd.DataFrame) -> list[CorrelationResult]:
-        numeric_cols = df.select_dtypes(include="number").columns.tolist()
+        numeric_cols = [
+            column
+            for column in df.select_dtypes(include="number").columns
+            if not any(token in column.lower() for token in ("zip", "fips", "_id", "id_code"))
+        ]
         results: list[CorrelationResult] = []
         for i, col_x in enumerate(numeric_cols):
             for col_y in numeric_cols[i + 1 :]:
@@ -147,12 +172,12 @@ class CorrelationAgent:
     def correlation_matrix(self, df: pd.DataFrame) -> pd.DataFrame:
         return df.select_dtypes(include="number").corr(method="pearson")
 
-    def run(self) -> AgentResult:
+    def run(self, filenames: list[str] | None = None) -> AgentResult:
         if self.use_real_data:
-            paths = [self.processed_dir / s.processed_name for s in REAL_DATASETS]
-            paths.append(self.processed_dir / "volunteer_county.csv")
+            names = filenames or [s.processed_name for s in REAL_DATASETS] + ["volunteer_county.csv"]
+            paths = [self.processed_dir / name for name in names]
         else:
-            paths = sorted(self.processed_dir.glob("sample_*.csv"))
+            paths = [self.processed_dir / name for name in filenames] if filenames else sorted(self.processed_dir.glob("sample_*.csv"))
 
         paths = [p for p in paths if p.exists()]
         if not paths:
@@ -196,6 +221,9 @@ class CorrelationAgent:
             "merged_counties": len(merged) if merged is not None else 0,
             "total_pairs_analyzed": len(all_results),
             "significant_findings": len(significant),
+            "minimum_sample_size": self.minimum_sample_size,
+            "significance_threshold": self.significance_level,
+            "minimum_correlation_magnitude": self.min_abs_correlation,
             "top_correlations": [r.to_dict() for r in significant[:20]],
             "all_correlations": [r.to_dict() for r in all_results],
             "correlation_matrix": heatmap_df.round(4).to_dict() if heatmap_df is not None else None,

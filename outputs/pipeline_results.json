@@ -9,19 +9,19 @@
         {
           "name": "sample_nonprofit_funding",
           "source": "NORP Metabase (sample)",
-          "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/raw/sample_nonprofit_funding.csv",
+          "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_nonprofit_funding.csv",
           "description": "Sample nonprofit funding and volunteer metrics",
           "relevance_score": 89.0,
-          "row_count": 26,
+          "row_count": 25,
           "column_count": 8,
           "schema": {
-            "organization_id": "object",
-            "nonprofit_name": "object",
+            "organization_id": "str",
+            "nonprofit_name": "str",
             "funding": "int64",
             "revenue": "int64",
             "volunteer_hours": "int64",
-            "city": "object",
-            "state": "object",
+            "city": "str",
+            "state": "str",
             "zip_code": "int64"
           },
           "status": "imported"
@@ -29,7 +29,7 @@
         {
           "name": "sample_demographics",
           "source": "Census Bureau (sample)",
-          "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/raw/sample_demographics.csv",
+          "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_demographics.csv",
           "description": "Sample zip-level demographics",
           "relevance_score": 49.0,
           "row_count": 25,
@@ -46,14 +46,14 @@
         {
           "name": "sample_volunteer_engagement",
           "source": "Data.gov (sample)",
-          "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/raw/sample_volunteer_engagement.csv",
+          "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_volunteer_engagement.csv",
           "description": "Sample volunteer hours and retention by zip",
           "relevance_score": 59.0,
           "row_count": 25,
           "column_count": 5,
           "schema": {
             "zip_code": "int64",
-            "organization_id": "object",
+            "organization_id": "str",
             "volunteer_hours": "int64",
             "retention_rate": "float64",
             "engagement_score": "int64"
@@ -75,9 +75,9 @@
         {
           "agent": "cleaning",
           "success": true,
-          "message": "Cleaned sample_demographics.csv",
+          "message": "Cleaned sample_nonprofit_funding.csv",
           "data": {
-            "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/processed/sample_demographics.csv",
+            "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_nonprofit_funding.csv",
             "report": {
               "original_rows": 25,
               "duplicates_removed": 0,
@@ -90,15 +90,15 @@
         {
           "agent": "cleaning",
           "success": true,
-          "message": "Cleaned sample_nonprofit_funding.csv",
+          "message": "Cleaned sample_demographics.csv",
           "data": {
-            "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/processed/sample_nonprofit_funding.csv",
+            "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_demographics.csv",
             "report": {
-              "original_rows": 26,
-              "duplicates_removed": 1,
+              "original_rows": 25,
+              "duplicates_removed": 0,
               "null_columns_dropped": [],
               "final_rows": 25,
-              "row_loss_pct": 3.85
+              "row_loss_pct": 0.0
             }
           }
         },
@@ -107,7 +107,7 @@
           "success": true,
           "message": "Cleaned sample_volunteer_engagement.csv",
           "data": {
-            "path": "/private/var/folders/jh/vfb560xj6fz5crmh7yl0fhmc0000gn/T/pytest-of-saanvibhu/pytest-6/test_end_to_end0/processed/sample_volunteer_engagement.csv",
+            "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_volunteer_engagement.csv",
             "report": {
               "original_rows": 25,
               "duplicates_removed": 0,
@@ -132,9 +132,19 @@
           "quality_score": 100.0,
           "missing_value_pct": 0.0,
           "duplicate_count": 0,
+          "duplicate_rate": 0.0,
           "row_count": 25,
           "column_count": 8,
-          "passed": "True",
+          "passed": true,
+          "numeric_columns": [
+            "funding",
+            "revenue",
+            "volunteer_hours",
+            "zip_code"
+          ],
+          "join_success_rate": null,
+          "failure_reasons": [],
+          "recommended_corrective_action": "No corrective action required",
           "issues": []
         },
         {
@@ -142,9 +152,20 @@
           "quality_score": 100.0,
           "missing_value_pct": 0.0,
           "duplicate_count": 0,
+          "duplicate_rate": 0.0,
           "row_count": 25,
           "column_count": 5,
-          "passed": "True",
+          "passed": true,
+          "numeric_columns": [
+            "zip_code",
+            "median_income",
+            "education_pct",
+            "unemployment_rate",
+            "population"
+          ],
+          "join_success_rate": null,
+          "failure_reasons": [],
+          "recommended_corrective_action": "No corrective action required",
           "issues": []
         },
         {
@@ -152,9 +173,19 @@
           "quality_score": 100.0,
           "missing_value_pct": 0.0,
           "duplicate_count": 0,
+          "duplicate_rate": 0.0,
           "row_count": 25,
           "column_count": 5,
-          "passed": "True",
+          "passed": true,
+          "numeric_columns": [
+            "zip_code",
+            "volunteer_hours",
+            "retention_rate",
+            "engagement_score"
+          ],
+          "join_success_rate": null,
+          "failure_reasons": [],
+          "recommended_corrective_action": "No corrective action required",
           "issues": []
         }
       ],
@@ -172,13 +203,16 @@
   "correlation": {
     "agent": "correlation",
     "success": true,
-    "message": "Found 45 significant correlations out of 50 pairs",
+    "message": "Found 33 significant correlations out of 33 pairs",
     "data": {
       "mode": "sample",
       "states": null,
       "merged_counties": 25,
-      "total_pairs_analyzed": 50,
-      "significant_findings": 45,
+      "total_pairs_analyzed": 33,
+      "significant_findings": 33,
+      "minimum_sample_size": 10,
+      "significance_threshold": 0.05,
+      "minimum_correlation_magnitude": 0.3,
       "top_correlations": [
         {
           "variable_x": "median_income",
@@ -190,7 +224,12 @@
           "mutual_information": 1.7493,
           "regression_coef": 0.0007,
           "regression_r_squared": 0.9971,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9966,
+            0.9994
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -202,7 +241,12 @@
           "mutual_information": 1.7493,
           "regression_coef": 0.0007,
           "regression_r_squared": 0.9971,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9966,
+            0.9994
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -214,7 +258,12 @@
           "mutual_information": 1.688,
           "regression_coef": 99.8378,
           "regression_r_squared": 0.9939,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.993,
+            0.9987
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -226,7 +275,12 @@
           "mutual_information": 1.688,
           "regression_coef": 99.8378,
           "regression_r_squared": 0.9939,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.993,
+            0.9987
+          ],
+          "significant": true
         },
         {
           "variable_x": "funding",
@@ -238,7 +292,12 @@
           "mutual_information": 1.6429,
           "regression_coef": 0.0049,
           "regression_r_squared": 0.9923,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9911,
+            0.9983
+          ],
+          "significant": true
         },
         {
           "variable_x": "funding",
@@ -250,7 +309,12 @@
           "mutual_information": 1.7006,
           "regression_coef": 1.0899,
           "regression_r_squared": 0.9911,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9897,
+            0.9981
+          ],
+          "significant": true
         },
         {
           "variable_x": "revenue",
@@ -262,7 +326,12 @@
           "mutual_information": 1.4448,
           "regression_coef": 0.0045,
           "regression_r_squared": 0.9825,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9799,
+            0.9962
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -274,7 +343,12 @@
           "mutual_information": 1.44,
           "regression_coef": -0.0001,
           "regression_r_squared": 0.9507,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9891,
+            -0.9433
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -286,7 +360,12 @@
           "mutual_information": 1.44,
           "regression_coef": -0.0001,
           "regression_r_squared": 0.9507,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9891,
+            -0.9433
+          ],
+          "significant": true
         },
         {
           "variable_x": "education_pct",
@@ -298,7 +377,12 @@
           "mutual_information": 1.5093,
           "regression_coef": -0.1778,
           "regression_r_squared": 0.9501,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.989,
+            -0.9427
+          ],
+          "significant": true
         },
         {
           "variable_x": "education_pct",
@@ -310,7 +394,12 @@
           "mutual_information": 1.5093,
           "regression_coef": -0.1778,
           "regression_r_squared": 0.9501,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.989,
+            -0.9427
+          ],
+          "significant": true
         },
         {
           "variable_x": "unemployment_rate",
@@ -322,7 +411,12 @@
           "mutual_information": 1.1815,
           "regression_coef": 3730.0408,
           "regression_r_squared": 0.9475,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9397,
+            0.9884
+          ],
+          "significant": true
         },
         {
           "variable_x": "unemployment_rate",
@@ -334,7 +428,12 @@
           "mutual_information": 1.1815,
           "regression_coef": 3730.0408,
           "regression_r_squared": 0.9475,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9397,
+            0.9884
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -346,7 +445,12 @@
           "mutual_information": 0.9547,
           "regression_coef": 89.4131,
           "regression_r_squared": 0.9195,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9077,
+            0.982
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -358,7 +462,12 @@
           "mutual_information": 0.9582,
           "regression_coef": 131076.7785,
           "regression_r_squared": 0.9112,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.8982,
+            0.98
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -370,7 +479,12 @@
           "mutual_information": 0.8743,
           "regression_coef": 0.8835,
           "regression_r_squared": 0.9004,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.886,
+            0.9775
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -382,7 +496,12 @@
           "mutual_information": 0.8926,
           "regression_coef": -16.0709,
           "regression_r_squared": 0.8932,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9758,
+            -0.8777
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -394,7 +513,12 @@
           "mutual_information": 0.8289,
           "regression_coef": 1294.6663,
           "regression_r_squared": 0.8915,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.8758,
+            0.9754
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -406,7 +530,12 @@
           "mutual_information": 0.7924,
           "regression_coef": -0.1585,
           "regression_r_squared": 0.8709,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9705,
+            -0.8524
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -418,130 +547,15 @@
           "mutual_information": 1.1635,
           "regression_coef": -0.4399,
           "regression_r_squared": 0.8595,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9677,
+            -0.8395
+          ],
+          "significant": true
         }
       ],
       "all_correlations": [
-        {
-          "variable_x": "median_income",
-          "variable_y": "education_pct",
-          "pearson_r": 0.9985,
-          "pearson_p": 0.0,
-          "spearman_r": 1.0,
-          "spearman_p": 0.0,
-          "mutual_information": 1.7493,
-          "regression_coef": 0.0007,
-          "regression_r_squared": 0.9971,
-          "significant": "True"
-        },
-        {
-          "variable_x": "median_income",
-          "variable_y": "unemployment_rate",
-          "pearson_r": -0.975,
-          "pearson_p": 0.0,
-          "spearman_r": -0.9962,
-          "spearman_p": 0.0,
-          "mutual_information": 1.44,
-          "regression_coef": -0.0001,
-          "regression_r_squared": 0.9507,
-          "significant": "True"
-        },
-        {
-          "variable_x": "education_pct",
-          "variable_y": "unemployment_rate",
-          "pearson_r": -0.9747,
-          "pearson_p": 0.0,
-          "spearman_r": -0.9962,
-          "spearman_p": 0.0,
-          "mutual_information": 1.5093,
-          "regression_coef": -0.1778,
-          "regression_r_squared": 0.9501,
-          "significant": "True"
-        },
-        {
-          "variable_x": "unemployment_rate",
-          "variable_y": "population",
-          "pearson_r": 0.9734,
-          "pearson_p": 0.0,
-          "spearman_r": 0.9715,
-          "spearman_p": 0.0,
-          "mutual_information": 1.1815,
-          "regression_coef": 3730.0408,
-          "regression_r_squared": 0.9475,
-          "significant": "True"
-        },
-        {
-          "variable_x": "median_income",
-          "variable_y": "population",
-          "pearson_r": -0.9271,
-          "pearson_p": 0.0,
-          "spearman_r": -0.9569,
-          "spearman_p": 0.0,
-          "mutual_information": 1.1635,
-          "regression_coef": -0.4399,
-          "regression_r_squared": 0.8595,
-          "significant": "True"
-        },
-        {
-          "variable_x": "education_pct",
-          "variable_y": "population",
-          "pearson_r": -0.9257,
-          "pearson_p": 0.0,
-          "spearman_r": -0.9569,
-          "spearman_p": 0.0,
-          "mutual_information": 1.1394,
-          "regression_coef": -646.8923,
-          "regression_r_squared": 0.8569,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "population",
-          "pearson_r": 0.7191,
-          "pearson_p": 5.1e-05,
-          "spearman_r": 0.5892,
-          "spearman_p": 0.00194,
-          "mutual_information": 0.421,
-          "regression_coef": 8.7429,
-          "regression_r_squared": 0.5171,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "unemployment_rate",
-          "pearson_r": 0.696,
-          "pearson_p": 0.000112,
-          "spearman_r": 0.5492,
-          "spearman_p": 0.004461,
-          "mutual_information": 0.369,
-          "regression_coef": 0.0022,
-          "regression_r_squared": 0.4844,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "median_income",
-          "pearson_r": -0.6594,
-          "pearson_p": 0.000336,
-          "spearman_r": -0.5623,
-          "spearman_p": 0.003437,
-          "mutual_information": 0.4049,
-          "regression_coef": -16.8958,
-          "regression_r_squared": 0.4349,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "education_pct",
-          "pearson_r": -0.6477,
-          "pearson_p": 0.000465,
-          "spearman_r": -0.5623,
-          "spearman_p": 0.003437,
-          "mutual_information": 0.354,
-          "regression_coef": -0.0113,
-          "regression_r_squared": 0.4195,
-          "significant": "True"
-        },
         {
           "variable_x": "funding",
           "variable_y": "volunteer_hours",
@@ -552,7 +566,12 @@
           "mutual_information": 1.6429,
           "regression_coef": 0.0049,
           "regression_r_squared": 0.9923,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9911,
+            0.9983
+          ],
+          "significant": true
         },
         {
           "variable_x": "funding",
@@ -564,7 +583,12 @@
           "mutual_information": 1.7006,
           "regression_coef": 1.0899,
           "regression_r_squared": 0.9911,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9897,
+            0.9981
+          ],
+          "significant": true
         },
         {
           "variable_x": "revenue",
@@ -576,43 +600,114 @@
           "mutual_information": 1.4448,
           "regression_coef": 0.0045,
           "regression_r_squared": 0.9825,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9799,
+            0.9962
+          ],
+          "significant": true
         },
         {
-          "variable_x": "revenue",
-          "variable_y": "zip_code",
-          "pearson_r": -0.3701,
-          "pearson_p": 0.068562,
-          "spearman_r": -0.2923,
-          "spearman_p": 0.156219,
-          "mutual_information": 0.1526,
-          "regression_coef": -0.0019,
-          "regression_r_squared": 0.137,
-          "significant": "False"
+          "variable_x": "median_income",
+          "variable_y": "education_pct",
+          "pearson_r": 0.9985,
+          "pearson_p": 0.0,
+          "spearman_r": 1.0,
+          "spearman_p": 0.0,
+          "mutual_information": 1.7493,
+          "regression_coef": 0.0007,
+          "regression_r_squared": 0.9971,
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9966,
+            0.9994
+          ],
+          "significant": true
         },
         {
-          "variable_x": "funding",
-          "variable_y": "zip_code",
-          "pearson_r": -0.3667,
-          "pearson_p": 0.0714,
-          "spearman_r": -0.2416,
-          "spearman_p": 0.244661,
-          "mutual_information": 0.1026,
-          "regression_coef": -0.002,
-          "regression_r_squared": 0.1345,
-          "significant": "False"
+          "variable_x": "median_income",
+          "variable_y": "unemployment_rate",
+          "pearson_r": -0.975,
+          "pearson_p": 0.0,
+          "spearman_r": -0.9962,
+          "spearman_p": 0.0,
+          "mutual_information": 1.44,
+          "regression_coef": -0.0001,
+          "regression_r_squared": 0.9507,
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9891,
+            -0.9433
+          ],
+          "significant": true
         },
         {
-          "variable_x": "volunteer_hours",
-          "variable_y": "zip_code",
-          "pearson_r": -0.3551,
-          "pearson_p": 0.08151,
-          "spearman_r": -0.2362,
-          "spearman_p": 0.255754,
-          "mutual_information": 0.1127,
-          "regression_coef": -0.3931,
-          "regression_r_squared": 0.1261,
-          "significant": "False"
+          "variable_x": "education_pct",
+          "variable_y": "unemployment_rate",
+          "pearson_r": -0.9747,
+          "pearson_p": 0.0,
+          "spearman_r": -0.9962,
+          "spearman_p": 0.0,
+          "mutual_information": 1.5093,
+          "regression_coef": -0.1778,
+          "regression_r_squared": 0.9501,
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.989,
+            -0.9427
+          ],
+          "significant": true
+        },
+        {
+          "variable_x": "unemployment_rate",
+          "variable_y": "population",
+          "pearson_r": 0.9734,
+          "pearson_p": 0.0,
+          "spearman_r": 0.9715,
+          "spearman_p": 0.0,
+          "mutual_information": 1.1815,
+          "regression_coef": 3730.0408,
+          "regression_r_squared": 0.9475,
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9397,
+            0.9884
+          ],
+          "significant": true
+        },
+        {
+          "variable_x": "median_income",
+          "variable_y": "population",
+          "pearson_r": -0.9271,
+          "pearson_p": 0.0,
+          "spearman_r": -0.9569,
+          "spearman_p": 0.0,
+          "mutual_information": 1.1635,
+          "regression_coef": -0.4399,
+          "regression_r_squared": 0.8595,
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9677,
+            -0.8395
+          ],
+          "significant": true
+        },
+        {
+          "variable_x": "education_pct",
+          "variable_y": "population",
+          "pearson_r": -0.9257,
+          "pearson_p": 0.0,
+          "spearman_r": -0.9569,
+          "spearman_p": 0.0,
+          "mutual_information": 1.1394,
+          "regression_coef": -646.8923,
+          "regression_r_squared": 0.8569,
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9671,
+            -0.8366
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -624,7 +719,12 @@
           "mutual_information": 1.688,
           "regression_coef": 99.8378,
           "regression_r_squared": 0.9939,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.993,
+            0.9987
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -636,7 +736,12 @@
           "mutual_information": 0.3216,
           "regression_coef": 0.0165,
           "regression_r_squared": 0.6376,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.5893,
+            0.9073
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -648,43 +753,12 @@
           "mutual_information": 0.349,
           "regression_coef": 0.0002,
           "regression_r_squared": 0.6299,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "retention_rate",
-          "pearson_r": -0.5802,
-          "pearson_p": 0.002365,
-          "spearman_r": -0.4885,
-          "spearman_p": 0.013232,
-          "mutual_information": 0.122,
-          "regression_coef": -0.0001,
-          "regression_r_squared": 0.3366,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "engagement_score",
-          "pearson_r": -0.5441,
-          "pearson_p": 0.004931,
-          "spearman_r": -0.4592,
-          "spearman_p": 0.020927,
-          "mutual_information": 0.0746,
-          "regression_coef": -0.0102,
-          "regression_r_squared": 0.296,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "volunteer_hours",
-          "pearson_r": -0.3551,
-          "pearson_p": 0.08151,
-          "spearman_r": -0.2362,
-          "spearman_p": 0.255754,
-          "mutual_information": 0.1127,
-          "regression_coef": -0.3208,
-          "regression_r_squared": 0.1261,
-          "significant": "False"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.5807,
+            0.905
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -696,7 +770,12 @@
           "mutual_information": 1.7493,
           "regression_coef": 0.0007,
           "regression_r_squared": 0.9971,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9966,
+            0.9994
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -708,7 +787,12 @@
           "mutual_information": 1.688,
           "regression_coef": 99.8378,
           "regression_r_squared": 0.9939,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.993,
+            0.9987
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -720,7 +804,12 @@
           "mutual_information": 1.44,
           "regression_coef": -0.0001,
           "regression_r_squared": 0.9507,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9891,
+            -0.9433
+          ],
+          "significant": true
         },
         {
           "variable_x": "education_pct",
@@ -732,7 +821,12 @@
           "mutual_information": 1.5093,
           "regression_coef": -0.1778,
           "regression_r_squared": 0.9501,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.989,
+            -0.9427
+          ],
+          "significant": true
         },
         {
           "variable_x": "unemployment_rate",
@@ -744,7 +838,12 @@
           "mutual_information": 1.1815,
           "regression_coef": 3730.0408,
           "regression_r_squared": 0.9475,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9397,
+            0.9884
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -756,7 +855,12 @@
           "mutual_information": 0.9547,
           "regression_coef": 89.4131,
           "regression_r_squared": 0.9195,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.9077,
+            0.982
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -768,7 +872,12 @@
           "mutual_information": 0.9582,
           "regression_coef": 131076.7785,
           "regression_r_squared": 0.9112,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.8982,
+            0.98
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -780,7 +889,12 @@
           "mutual_information": 0.8743,
           "regression_coef": 0.8835,
           "regression_r_squared": 0.9004,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.886,
+            0.9775
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -792,7 +906,12 @@
           "mutual_information": 0.8926,
           "regression_coef": -16.0709,
           "regression_r_squared": 0.8932,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9758,
+            -0.8777
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -804,7 +923,12 @@
           "mutual_information": 0.8289,
           "regression_coef": 1294.6663,
           "regression_r_squared": 0.8915,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.8758,
+            0.9754
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -816,7 +940,12 @@
           "mutual_information": 0.7924,
           "regression_coef": -0.1585,
           "regression_r_squared": 0.8709,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9705,
+            -0.8524
+          ],
+          "significant": true
         },
         {
           "variable_x": "median_income",
@@ -828,7 +957,12 @@
           "mutual_information": 1.1635,
           "regression_coef": -0.4399,
           "regression_r_squared": 0.8595,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9677,
+            -0.8395
+          ],
+          "significant": true
         },
         {
           "variable_x": "education_pct",
@@ -840,7 +974,12 @@
           "mutual_information": 1.1394,
           "regression_coef": -646.8923,
           "regression_r_squared": 0.8569,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9671,
+            -0.8366
+          ],
+          "significant": true
         },
         {
           "variable_x": "retention_rate",
@@ -852,7 +991,12 @@
           "mutual_information": 0.6812,
           "regression_coef": -57251.501,
           "regression_r_squared": 0.772,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9455,
+            -0.7406
+          ],
+          "significant": true
         },
         {
           "variable_x": "engagement_score",
@@ -864,7 +1008,12 @@
           "mutual_information": 0.628,
           "regression_coef": -563.1588,
           "regression_r_squared": 0.7491,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.9394,
+            -0.7148
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -876,7 +1025,12 @@
           "mutual_information": 0.3216,
           "regression_coef": 0.0165,
           "regression_r_squared": 0.6376,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.5893,
+            0.9073
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -888,43 +1042,12 @@
           "mutual_information": 0.349,
           "regression_coef": 0.0002,
           "regression_r_squared": 0.6299,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "population",
-          "pearson_r": 0.7191,
-          "pearson_p": 5.1e-05,
-          "spearman_r": 0.5892,
-          "spearman_p": 0.00194,
-          "mutual_information": 0.421,
-          "regression_coef": 8.7429,
-          "regression_r_squared": 0.5171,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "unemployment_rate",
-          "pearson_r": 0.696,
-          "pearson_p": 0.000112,
-          "spearman_r": 0.5492,
-          "spearman_p": 0.004461,
-          "mutual_information": 0.369,
-          "regression_coef": 0.0022,
-          "regression_r_squared": 0.4844,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "median_income",
-          "pearson_r": -0.6594,
-          "pearson_p": 0.000336,
-          "spearman_r": -0.5623,
-          "spearman_p": 0.003437,
-          "mutual_information": 0.4049,
-          "regression_coef": -16.8958,
-          "regression_r_squared": 0.4349,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.5807,
+            0.905
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -936,19 +1059,12 @@
           "mutual_information": 0.1366,
           "regression_coef": 0.0127,
           "regression_r_squared": 0.4341,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "education_pct",
-          "pearson_r": -0.6477,
-          "pearson_p": 0.000465,
-          "spearman_r": -0.5623,
-          "spearman_p": 0.003437,
-          "mutual_information": 0.354,
-          "regression_coef": -0.0113,
-          "regression_r_squared": 0.4195,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.3565,
+            0.8363
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -960,7 +1076,12 @@
           "mutual_information": 0.146,
           "regression_coef": 18.3198,
           "regression_r_squared": 0.4173,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            0.3368,
+            0.8294
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -972,31 +1093,12 @@
           "mutual_information": 0.1792,
           "regression_coef": -0.0021,
           "regression_r_squared": 0.3494,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "retention_rate",
-          "pearson_r": -0.5802,
-          "pearson_p": 0.002365,
-          "spearman_r": -0.4885,
-          "spearman_p": 0.013232,
-          "mutual_information": 0.122,
-          "regression_coef": -0.0001,
-          "regression_r_squared": 0.3366,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "engagement_score",
-          "pearson_r": -0.5441,
-          "pearson_p": 0.004931,
-          "spearman_r": -0.4592,
-          "spearman_p": 0.020927,
-          "mutual_information": 0.0746,
-          "regression_coef": -0.0102,
-          "regression_r_squared": 0.296,
-          "significant": "True"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.7995,
+            -0.2557
+          ],
+          "significant": true
         },
         {
           "variable_x": "volunteer_hours",
@@ -1008,19 +1110,12 @@
           "mutual_information": 0.1331,
           "regression_coef": -6.4422,
           "regression_r_squared": 0.2292,
-          "significant": "True"
-        },
-        {
-          "variable_x": "zip_code",
-          "variable_y": "volunteer_hours",
-          "pearson_r": -0.3551,
-          "pearson_p": 0.08151,
-          "spearman_r": -0.2362,
-          "spearman_p": 0.255754,
-          "mutual_information": 0.1127,
-          "regression_coef": -0.3208,
-          "regression_r_squared": 0.1261,
-          "significant": "False"
+          "sample_size": 25,
+          "pearson_ci": [
+            -0.7348,
+            -0.1031
+          ],
+          "significant": true
         }
       ],
       "correlation_matrix": {
@@ -1133,23 +1228,403 @@
       ]
     }
   },
+  "ranking": {
+    "agent": "ranking",
+    "success": true,
+    "message": "Ranked 20 approved correlations",
+    "data": {
+      "ranked_correlations": [
+        {
+          "rank": 1,
+          "variable_1": "volunteer_hours",
+          "variable_2": "engagement_score",
+          "correlation_coefficient": 0.7985,
+          "p_value": 2e-06,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.80, p-value 2e-06, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 2,
+          "variable_1": "volunteer_hours",
+          "variable_2": "retention_rate",
+          "correlation_coefficient": 0.7937,
+          "p_value": 2e-06,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.79, p-value 2e-06, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 3,
+          "variable_1": "volunteer_hours",
+          "variable_2": "education_pct",
+          "correlation_coefficient": 0.6588,
+          "p_value": 0.000342,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.66, p-value 0.000342, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 4,
+          "variable_1": "volunteer_hours",
+          "variable_2": "median_income",
+          "correlation_coefficient": 0.646,
+          "p_value": 0.000486,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.65, p-value 0.000486, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 5,
+          "variable_1": "volunteer_hours",
+          "variable_2": "unemployment_rate",
+          "correlation_coefficient": -0.5911,
+          "p_value": 0.001862,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.59, p-value 0.001862, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 6,
+          "variable_1": "median_income",
+          "variable_2": "education_pct",
+          "correlation_coefficient": 0.9985,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 1.00, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 7,
+          "variable_1": "retention_rate",
+          "variable_2": "engagement_score",
+          "correlation_coefficient": 0.9969,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 1.00, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 8,
+          "variable_1": "funding",
+          "variable_2": "volunteer_hours",
+          "correlation_coefficient": 0.9961,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 1.00, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 9,
+          "variable_1": "funding",
+          "variable_2": "revenue",
+          "correlation_coefficient": 0.9955,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 1.00, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 10,
+          "variable_1": "revenue",
+          "variable_2": "volunteer_hours",
+          "correlation_coefficient": 0.9912,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.99, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 11,
+          "variable_1": "median_income",
+          "variable_2": "unemployment_rate",
+          "correlation_coefficient": -0.975,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.97, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 12,
+          "variable_1": "education_pct",
+          "variable_2": "unemployment_rate",
+          "correlation_coefficient": -0.9747,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.97, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 13,
+          "variable_1": "unemployment_rate",
+          "variable_2": "population",
+          "correlation_coefficient": 0.9734,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.97, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 14,
+          "variable_1": "retention_rate",
+          "variable_2": "education_pct",
+          "correlation_coefficient": 0.9589,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.96, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 15,
+          "variable_1": "retention_rate",
+          "variable_2": "median_income",
+          "correlation_coefficient": 0.9546,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.95, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 16,
+          "variable_1": "engagement_score",
+          "variable_2": "education_pct",
+          "correlation_coefficient": 0.9489,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.95, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 17,
+          "variable_1": "retention_rate",
+          "variable_2": "unemployment_rate",
+          "correlation_coefficient": -0.9451,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.95, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 18,
+          "variable_1": "engagement_score",
+          "variable_2": "median_income",
+          "correlation_coefficient": 0.9442,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.94, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 19,
+          "variable_1": "engagement_score",
+          "variable_2": "unemployment_rate",
+          "correlation_coefficient": -0.9332,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.93, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        },
+        {
+          "rank": 20,
+          "variable_1": "median_income",
+          "variable_2": "population",
+          "correlation_coefficient": -0.9271,
+          "p_value": 0.0,
+          "sample_size": 25,
+          "quality_score": 100.0,
+          "missing_data_rate": 0.0,
+          "confidence_category": "moderate",
+          "explanation": "Rank reflects absolute strength 0.93, p-value 0.0, n=25, quality 100.0/100, and missingness 0.0%.",
+          "significant": true
+        }
+      ],
+      "finding_count": 20
+    }
+  },
   "insight": {
     "agent": "insight",
     "success": true,
-    "message": "Generated 10 findings and 15 hypotheses",
+    "message": "Generated 15 findings and 15 hypotheses",
     "data": {
       "research_question": "What factors are most correlated with nonprofit success, funding growth, volunteer retention, and community impact?",
       "findings": [
-        "Median Income is strongly positively correlated with Education Pct (r = 1.00, p = 0.0000).",
-        "Retention Rate is strongly positively correlated with Engagement Score (r = 1.00, p = 0.0000).",
-        "Funding is strongly positively correlated with Volunteer Hours (r = 1.00, p = 0.0000).",
-        "Funding is strongly positively correlated with Revenue (r = 1.00, p = 0.0000).",
-        "Revenue is strongly positively correlated with Volunteer Hours (r = 0.99, p = 0.0000).",
-        "Median Income is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
-        "Education Pct is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
-        "Unemployment Rate is strongly positively correlated with Population (r = 0.97, p = 0.0000).",
-        "Higher educational attainment is associated with improved volunteer retention. Observed correlation: r = 0.96 (~96% explained variance).",
-        "Retention Rate is strongly positively correlated with Median Income (r = 0.95, p = 0.0000)."
+        {
+          "finding": "Volunteer Hours is positively associated with Engagement Score.",
+          "statistical_evidence": "Correlation coefficient = 0.7985; p-value = 2e-06; sample size = 25.",
+          "interpretation": "Volunteer Hours is strongly positively correlated with Engagement Score (r = 0.80, p = 0.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Volunteer Hours is positively associated with Retention Rate.",
+          "statistical_evidence": "Correlation coefficient = 0.7937; p-value = 2e-06; sample size = 25.",
+          "interpretation": "Volunteer engagement tends to correlate with local retention outcomes. Observed correlation: r = 0.79 (~79% explained variance).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Volunteer Hours is positively associated with Education Pct.",
+          "statistical_evidence": "Correlation coefficient = 0.6588; p-value = 0.000342; sample size = 25.",
+          "interpretation": "Volunteer Hours is moderately positively correlated with Education Pct (r = 0.66, p = 0.0003).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Volunteer Hours is positively associated with Median Income.",
+          "statistical_evidence": "Correlation coefficient = 0.6460; p-value = 0.000486; sample size = 25.",
+          "interpretation": "Volunteer participation correlates with local median income levels. Observed correlation: r = 0.65 (~65% explained variance).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Volunteer Hours is negatively associated with Unemployment Rate.",
+          "statistical_evidence": "Correlation coefficient = -0.5911; p-value = 0.001862; sample size = 25.",
+          "interpretation": "Volunteer engagement tends to decrease in areas with higher unemployment. Observed correlation: r = -0.59 (~59% explained variance).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Median Income is positively associated with Education Pct.",
+          "statistical_evidence": "Correlation coefficient = 0.9985; p-value = 0.0; sample size = 25.",
+          "interpretation": "Median Income is strongly positively correlated with Education Pct (r = 1.00, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Retention Rate is positively associated with Engagement Score.",
+          "statistical_evidence": "Correlation coefficient = 0.9969; p-value = 0.0; sample size = 25.",
+          "interpretation": "Retention Rate is strongly positively correlated with Engagement Score (r = 1.00, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Funding is positively associated with Volunteer Hours.",
+          "statistical_evidence": "Correlation coefficient = 0.9961; p-value = 0.0; sample size = 25.",
+          "interpretation": "Funding is strongly positively correlated with Volunteer Hours (r = 1.00, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Funding is positively associated with Revenue.",
+          "statistical_evidence": "Correlation coefficient = 0.9955; p-value = 0.0; sample size = 25.",
+          "interpretation": "Funding is strongly positively correlated with Revenue (r = 1.00, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Revenue is positively associated with Volunteer Hours.",
+          "statistical_evidence": "Correlation coefficient = 0.9912; p-value = 0.0; sample size = 25.",
+          "interpretation": "Revenue is strongly positively correlated with Volunteer Hours (r = 0.99, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Median Income is negatively associated with Unemployment Rate.",
+          "statistical_evidence": "Correlation coefficient = -0.9750; p-value = 0.0; sample size = 25.",
+          "interpretation": "Median Income is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Education Pct is negatively associated with Unemployment Rate.",
+          "statistical_evidence": "Correlation coefficient = -0.9747; p-value = 0.0; sample size = 25.",
+          "interpretation": "Education Pct is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Unemployment Rate is positively associated with Population.",
+          "statistical_evidence": "Correlation coefficient = 0.9734; p-value = 0.0; sample size = 25.",
+          "interpretation": "Unemployment Rate is strongly positively correlated with Population (r = 0.97, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Retention Rate is positively associated with Education Pct.",
+          "statistical_evidence": "Correlation coefficient = 0.9589; p-value = 0.0; sample size = 25.",
+          "interpretation": "Higher educational attainment is associated with improved volunteer retention. Observed correlation: r = 0.96 (~96% explained variance).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        },
+        {
+          "finding": "Retention Rate is positively associated with Median Income.",
+          "statistical_evidence": "Correlation coefficient = 0.9546; p-value = 0.0; sample size = 25.",
+          "interpretation": "Retention Rate is strongly positively correlated with Median Income (r = 0.95, p = 1.0000).",
+          "confidence": "moderate",
+          "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+          "correlation_causation_reminder": "Correlation does not imply causation."
+        }
       ],
       "hypotheses_generated": [
         "Does median household income affect educational attainment?",
@@ -1169,10 +1644,19 @@
         "Does volunteer engagement affect volunteer retention?"
       ],
       "llm_summary": null,
-      "finding_count": 10
+      "finding_count": 15,
+      "approved_correlation_count": 15
     }
   },
   "config": {
+    "minimum_rows": 10,
+    "maximum_missing_percentage": 20.0,
+    "maximum_duplicate_percentage": 10.0,
+    "minimum_join_success_rate": 70.0,
+    "minimum_correlation_magnitude": 0.3,
+    "significance_threshold": 0.05,
+    "minimum_sample_size": 10,
+    "top_ranked_findings": 20,
     "states": "ALL",
     "use_real_data": false
   }

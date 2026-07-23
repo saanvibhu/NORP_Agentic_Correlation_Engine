@@ -1,0 +1,60 @@
+{
+  "total_discovered": 3,
+  "accepted": [
+    {
+      "name": "sample_nonprofit_funding",
+      "source": "NORP Metabase (sample)",
+      "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_nonprofit_funding.csv",
+      "description": "Sample nonprofit funding and volunteer metrics",
+      "relevance_score": 89.0,
+      "row_count": 25,
+      "column_count": 8,
+      "schema": {
+        "organization_id": "str",
+        "nonprofit_name": "str",
+        "funding": "int64",
+        "revenue": "int64",
+        "volunteer_hours": "int64",
+        "city": "str",
+        "state": "str",
+        "zip_code": "int64"
+      },
+      "status": "imported"
+    },
+    {
+      "name": "sample_demographics",
+      "source": "Census Bureau (sample)",
+      "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_demographics.csv",
+      "description": "Sample zip-level demographics",
+      "relevance_score": 49.0,
+      "row_count": 25,
+      "column_count": 5,
+      "schema": {
+        "zip_code": "int64",
+        "median_income": "int64",
+        "education_pct": "float64",
+        "unemployment_rate": "float64",
+        "population": "int64"
+      },
+      "status": "imported"
+    },
+    {
+      "name": "sample_volunteer_engagement",
+      "source": "Data.gov (sample)",
+      "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_volunteer_engagement.csv",
+      "description": "Sample volunteer hours and retention by zip",
+      "relevance_score": 59.0,
+      "row_count": 25,
+      "column_count": 5,
+      "schema": {
+        "zip_code": "int64",
+        "organization_id": "str",
+        "volunteer_hours": "int64",
+        "retention_rate": "float64",
+        "engagement_score": "int64"
+      },
+      "status": "imported"
+    }
+  ],
+  "rejected": []
+}

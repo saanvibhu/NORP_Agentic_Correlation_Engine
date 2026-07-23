@@ -71,14 +71,32 @@ Potential datasets include:
 We are currently in the planning phase of the project.
 
 So far, we have:
-- Selected our project topic
-- Researched previous NORP work
-- Identified potential datasets
-- Designed the overall system architecture
-- Created the project repository
 
 The next step is to begin collecting datasets and implementing the agent pipeline.
+ project.
 
+## Implemented Pipeline
+
+The execution order is `Discovery -> Cleaning -> Deterministic Validation Gate -> Correlation -> Ranking -> Insight -> Report`.
+
+The Verifier/Critic gate evaluates row counts, duplicate rates, missingness, numeric columns, and join success before correlation analysis. Rejected datasets include failure reasons and recommended corrective actions in `data/processed/validation_report.json`.
+
+Correlation analysis computes Pearson and Spearman coefficients, p-values, sample sizes, and optional Pearson confidence intervals. A finding is marked significant only when configured sample-size, p-value, and magnitude thresholds pass. Ranked findings are saved to `outputs/ranked_correlations.json`.
+
+## Configuration and Commands
+
+Thresholds live in `config.yaml`; `agents/config.py` uses safe defaults if it is missing or malformed.
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run_pipeline.py --sample
+pytest
+streamlit run dashboard/app.py
+```
+
+Real-data execution is `python run_pipeline.py`, with optional `--state GA,FL`, `--with-llm`, and `--no-fetch-volunteer` flags. Expected outputs include `data/processed/validation_report.json`, `outputs/correlations.json`, `outputs/ranked_correlations.json`, `outputs/insights.json`, `outputs/research_report.md`, and `outputs/merged_county.csv` when a merge is available. Pipeline events are written to `logs/pipeline.log`.
 ## Team Members
 
 - Saanvi Bhumpalle

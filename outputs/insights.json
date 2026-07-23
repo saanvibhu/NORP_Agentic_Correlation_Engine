@@ -1,16 +1,126 @@
 {
   "research_question": "What factors are most correlated with nonprofit success, funding growth, volunteer retention, and community impact?",
   "findings": [
-    "Median Income is strongly positively correlated with Education Pct (r = 1.00, p = 0.0000).",
-    "Retention Rate is strongly positively correlated with Engagement Score (r = 1.00, p = 0.0000).",
-    "Funding is strongly positively correlated with Volunteer Hours (r = 1.00, p = 0.0000).",
-    "Funding is strongly positively correlated with Revenue (r = 1.00, p = 0.0000).",
-    "Revenue is strongly positively correlated with Volunteer Hours (r = 0.99, p = 0.0000).",
-    "Median Income is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
-    "Education Pct is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 0.0000).",
-    "Unemployment Rate is strongly positively correlated with Population (r = 0.97, p = 0.0000).",
-    "Higher educational attainment is associated with improved volunteer retention. Observed correlation: r = 0.96 (~96% explained variance).",
-    "Retention Rate is strongly positively correlated with Median Income (r = 0.95, p = 0.0000)."
+    {
+      "finding": "Volunteer Hours is positively associated with Engagement Score.",
+      "statistical_evidence": "Correlation coefficient = 0.7985; p-value = 2e-06; sample size = 25.",
+      "interpretation": "Volunteer Hours is strongly positively correlated with Engagement Score (r = 0.80, p = 0.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Volunteer Hours is positively associated with Retention Rate.",
+      "statistical_evidence": "Correlation coefficient = 0.7937; p-value = 2e-06; sample size = 25.",
+      "interpretation": "Volunteer engagement tends to correlate with local retention outcomes. Observed correlation: r = 0.79 (~79% explained variance).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Volunteer Hours is positively associated with Education Pct.",
+      "statistical_evidence": "Correlation coefficient = 0.6588; p-value = 0.000342; sample size = 25.",
+      "interpretation": "Volunteer Hours is moderately positively correlated with Education Pct (r = 0.66, p = 0.0003).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Volunteer Hours is positively associated with Median Income.",
+      "statistical_evidence": "Correlation coefficient = 0.6460; p-value = 0.000486; sample size = 25.",
+      "interpretation": "Volunteer participation correlates with local median income levels. Observed correlation: r = 0.65 (~65% explained variance).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Volunteer Hours is negatively associated with Unemployment Rate.",
+      "statistical_evidence": "Correlation coefficient = -0.5911; p-value = 0.001862; sample size = 25.",
+      "interpretation": "Volunteer engagement tends to decrease in areas with higher unemployment. Observed correlation: r = -0.59 (~59% explained variance).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Median Income is positively associated with Education Pct.",
+      "statistical_evidence": "Correlation coefficient = 0.9985; p-value = 0.0; sample size = 25.",
+      "interpretation": "Median Income is strongly positively correlated with Education Pct (r = 1.00, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Retention Rate is positively associated with Engagement Score.",
+      "statistical_evidence": "Correlation coefficient = 0.9969; p-value = 0.0; sample size = 25.",
+      "interpretation": "Retention Rate is strongly positively correlated with Engagement Score (r = 1.00, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Funding is positively associated with Volunteer Hours.",
+      "statistical_evidence": "Correlation coefficient = 0.9961; p-value = 0.0; sample size = 25.",
+      "interpretation": "Funding is strongly positively correlated with Volunteer Hours (r = 1.00, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Funding is positively associated with Revenue.",
+      "statistical_evidence": "Correlation coefficient = 0.9955; p-value = 0.0; sample size = 25.",
+      "interpretation": "Funding is strongly positively correlated with Revenue (r = 1.00, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Revenue is positively associated with Volunteer Hours.",
+      "statistical_evidence": "Correlation coefficient = 0.9912; p-value = 0.0; sample size = 25.",
+      "interpretation": "Revenue is strongly positively correlated with Volunteer Hours (r = 0.99, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Median Income is negatively associated with Unemployment Rate.",
+      "statistical_evidence": "Correlation coefficient = -0.9750; p-value = 0.0; sample size = 25.",
+      "interpretation": "Median Income is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Education Pct is negatively associated with Unemployment Rate.",
+      "statistical_evidence": "Correlation coefficient = -0.9747; p-value = 0.0; sample size = 25.",
+      "interpretation": "Education Pct is strongly negatively correlated with Unemployment Rate (r = -0.97, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Unemployment Rate is positively associated with Population.",
+      "statistical_evidence": "Correlation coefficient = 0.9734; p-value = 0.0; sample size = 25.",
+      "interpretation": "Unemployment Rate is strongly positively correlated with Population (r = 0.97, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Retention Rate is positively associated with Education Pct.",
+      "statistical_evidence": "Correlation coefficient = 0.9589; p-value = 0.0; sample size = 25.",
+      "interpretation": "Higher educational attainment is associated with improved volunteer retention. Observed correlation: r = 0.96 (~96% explained variance).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    },
+    {
+      "finding": "Retention Rate is positively associated with Median Income.",
+      "statistical_evidence": "Correlation coefficient = 0.9546; p-value = 0.0; sample size = 25.",
+      "interpretation": "Retention Rate is strongly positively correlated with Median Income (r = 0.95, p = 1.0000).",
+      "confidence": "moderate",
+      "limitations": "The result is observational and may be affected by confounding variables, measurement choices, and missing data.",
+      "correlation_causation_reminder": "Correlation does not imply causation."
+    }
   ],
   "hypotheses_generated": [
     "Does median household income affect educational attainment?",
@@ -30,5 +140,6 @@
     "Does volunteer engagement affect volunteer retention?"
   ],
   "llm_summary": null,
-  "finding_count": 10
+  "finding_count": 15,
+  "approved_correlation_count": 15
 }

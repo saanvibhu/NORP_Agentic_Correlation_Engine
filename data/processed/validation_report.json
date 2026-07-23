@@ -2,58 +2,74 @@
   "quality_threshold": 70.0,
   "reports": [
     {
-      "dataset_name": "irs_990_county",
+      "dataset_name": "sample_nonprofit_funding",
       "quality_score": 100.0,
       "missing_value_pct": 0.0,
       "duplicate_count": 0,
-      "row_count": 226,
-      "column_count": 12,
-      "passed": "True",
+      "duplicate_rate": 0.0,
+      "row_count": 25,
+      "column_count": 8,
+      "passed": true,
+      "numeric_columns": [
+        "funding",
+        "revenue",
+        "volunteer_hours",
+        "zip_code"
+      ],
+      "join_success_rate": null,
+      "failure_reasons": [],
+      "recommended_corrective_action": "No corrective action required",
       "issues": []
     },
     {
-      "dataset_name": "census_acs_dp03_county",
-      "quality_score": 77.8,
-      "missing_value_pct": 22.22,
-      "duplicate_count": 0,
-      "row_count": 226,
-      "column_count": 9,
-      "passed": "True",
-      "issues": [
-        "High missing values: 22.2%"
-      ]
-    },
-    {
-      "dataset_name": "cdc_places_county",
-      "quality_score": 94.1,
-      "missing_value_pct": 5.93,
-      "duplicate_count": 0,
-      "row_count": 226,
-      "column_count": 10,
-      "passed": "True",
-      "issues": []
-    },
-    {
-      "dataset_name": "volunteer_county",
+      "dataset_name": "sample_demographics",
       "quality_score": 100.0,
       "missing_value_pct": 0.0,
       "duplicate_count": 0,
-      "row_count": 226,
-      "column_count": 6,
-      "passed": "True",
+      "duplicate_rate": 0.0,
+      "row_count": 25,
+      "column_count": 5,
+      "passed": true,
+      "numeric_columns": [
+        "zip_code",
+        "median_income",
+        "education_pct",
+        "unemployment_rate",
+        "population"
+      ],
+      "join_success_rate": null,
+      "failure_reasons": [],
+      "recommended_corrective_action": "No corrective action required",
+      "issues": []
+    },
+    {
+      "dataset_name": "sample_volunteer_engagement",
+      "quality_score": 100.0,
+      "missing_value_pct": 0.0,
+      "duplicate_count": 0,
+      "duplicate_rate": 0.0,
+      "row_count": 25,
+      "column_count": 5,
+      "passed": true,
+      "numeric_columns": [
+        "zip_code",
+        "volunteer_hours",
+        "retention_rate",
+        "engagement_score"
+      ],
+      "join_success_rate": null,
+      "failure_reasons": [],
+      "recommended_corrective_action": "No corrective action required",
       "issues": []
     }
   ],
   "accepted": [
-    "irs_990_county.csv",
-    "census_acs_dp03_county.csv",
-    "cdc_places_county.csv",
-    "volunteer_county.csv"
+    "sample_nonprofit_funding.csv",
+    "sample_demographics.csv",
+    "sample_volunteer_engagement.csv"
   ],
   "dropped": [],
   "join_metrics": {
-    "irs_to_census": 100.0,
-    "irs_to_cdc": 100.0,
-    "census_to_cdc": 100.0
+    "volunteer_to_demographics": 100.0
   }
 }

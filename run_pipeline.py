@@ -13,9 +13,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from agents.base import OUTPUTS_DIR, save_json, setup_logger
 from agents.cleaning_agent import CleaningAgent
 from agents.correlation_agent import CorrelationAgent
+from agents.config import load_config
 from agents.dataset_registry import SAMPLE_DATASETS, active_real_specs
 from agents.discovery_agent import DiscoveryAgent
 from agents.insight_agent import InsightAgent
+from agents.ranking_agent import RankingAgent
 from agents.metabase_client import sync_norp_datasets
 from agents.state_utils import parse_state_filter, state_label
 from agents.validation_agent import ValidationAgent
@@ -32,6 +34,8 @@ def run_pipeline(
     fetch_volunteer: bool = True,
 ) -> dict:
     """Execute: discover → [metabase] → clean → validate → correlate → insight."""
+    config = load_config()
+    logger.info("Pipeline start")
     results: dict = {}
     states = parse_state_filter(state_filter) if use_real_data else None
     catalog = active_real_specs(states) if use_real_data else SAMPLE_DATASETS
@@ -72,11 +76,14 @@ def run_pipeline(
     cleaning = CleaningAgent(
         use_real_data=use_real_data,
         state_filter=state_filter,
-    ).run(specs=accepted_specs if use_real_data else None)
+    ).run(
+        specs=accepted_specs if use_real_data else None,
+        filenames=None if use_real_data else processed_names,
+    )
     results["cleaning"] = cleaning.to_dict()
 
     logger.info("=== Agent 3: Verification ===")
-    validation = ValidationAgent(use_real_data=use_real_data).run(filenames=processed_names)
+    validation = ValidationAgent(use_real_data=use_real_data, config=config).run(filenames=processed_names)
     results["validation"] = validation.to_dict()
 
     validated = validation.data.get("accepted", processed_names)
@@ -84,18 +91,24 @@ def run_pipeline(
         return results
 
     logger.info("=== Agent 4: Correlation Analysis ===")
-    correlation = CorrelationAgent(use_real_data=use_real_data, states=states).run()
+    correlation = CorrelationAgent(use_real_data=use_real_data, states=states, config=config).run(filenames=validated)
     results["correlation"] = correlation.to_dict()
 
-    logger.info("=== Agent 5: Insight Generation ===")
+    logger.info("Correlation counts: total=%s significant=%s", correlation.data.get("total_pairs_analyzed", 0) if correlation.data else 0, correlation.data.get("significant_findings", 0) if correlation.data else 0)
+    logger.info("=== Agent 5: Correlation Ranking ===")
+    ranking = RankingAgent(config=config).run()
+    results["ranking"] = ranking.to_dict()
+
+    logger.info("=== Agent 6: Insight Generation ===")
     insight = InsightAgent(use_llm=not skip_insight_llm).run()
     results["insight"] = insight.to_dict()
 
     save_json(
-        {**results, "config": {"states": state_label(states), "use_real_data": use_real_data}},
+        {**results, "config": {**config.to_dict(), "states": state_label(states), "use_real_data": use_real_data}},
         OUTPUTS_DIR / "pipeline_results.json",
     )
     logger.info("Pipeline complete. Outputs: %s", OUTPUTS_DIR)
+    logger.info("Pipeline finish")
     return results
 
 

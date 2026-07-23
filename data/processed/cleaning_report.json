@@ -1,64 +1,50 @@
 {
-  "files_processed": 4,
-  "successful": 4,
+  "files_processed": 3,
+  "successful": 3,
   "details": [
     {
       "agent": "cleaning",
       "success": true,
-      "message": "Cleaned census_acs_dp03",
+      "message": "Cleaned sample_nonprofit_funding.csv",
       "data": {
-        "path": "/Users/saanvibhu/Documents/MS/6365/NORP/NORPprojectprivate/data/processed/census_acs_dp03_county.csv",
+        "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_nonprofit_funding.csv",
         "report": {
-          "original_rows": 226,
-          "final_rows": 226
+          "original_rows": 25,
+          "duplicates_removed": 0,
+          "null_columns_dropped": [],
+          "final_rows": 25,
+          "row_loss_pct": 0.0
         }
       }
     },
     {
       "agent": "cleaning",
       "success": true,
-      "message": "Cleaned irs_990",
+      "message": "Cleaned sample_demographics.csv",
       "data": {
-        "path": "/Users/saanvibhu/Documents/MS/6365/NORP/NORPprojectprivate/data/processed/irs_990_county.csv",
+        "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_demographics.csv",
         "report": {
-          "original_rows": 3645070,
-          "filtered_rows": 35269,
-          "zip_mapped_rows": 11986,
-          "counties_with_orgs": 152,
-          "final_rows": 226
+          "original_rows": 25,
+          "duplicates_removed": 0,
+          "null_columns_dropped": [],
+          "final_rows": 25,
+          "row_loss_pct": 0.0
         }
       }
     },
     {
       "agent": "cleaning",
       "success": true,
-      "message": "Cleaned cdc_places_county",
+      "message": "Cleaned sample_volunteer_engagement.csv",
       "data": {
-        "path": "/Users/saanvibhu/Documents/MS/6365/NORP/NORPprojectprivate/data/processed/cdc_places_county.csv",
+        "path": "/Users/saanvibhu/Documents/MS/6365/finalNORP/NORP_Agentic_Correlation_Engine/data/processed/sample_volunteer_engagement.csv",
         "report": {
-          "final_rows": 226,
-          "measures_included": [
-            "Obesity among adults",
-            "Depression among adults",
-            "Fair or poor self-rated health status among adults",
-            "Food insecurity in the past 12 months among adults",
-            "Housing insecurity in the past 12 months among adults",
-            "Binge drinking among adults",
-            "Any disability among adults"
-          ]
+          "original_rows": 25,
+          "duplicates_removed": 0,
+          "null_columns_dropped": [],
+          "final_rows": 25,
+          "row_loss_pct": 0.0
         }
-      }
-    },
-    {
-      "agent": "cleaning",
-      "success": true,
-      "message": "Cleaned volunteer_cps",
-      "data": {
-        "path": "/Users/saanvibhu/Documents/MS/6365/NORP/NORPprojectprivate/data/processed/volunteer_county.csv",
-        "report": {
-          "final_rows": 226
-        },
-        "dataframe": "    state_abbr county_fips                county_name  total_volunteers  volunteers_per_org  org_count\n0           FL       12001    Alachua County, Florida               0.0            0.000000        0.0\n1           FL       12003      Baker County, Florida               0.0            0.000000        0.0\n2           FL       12005        Bay County, Florida               0.0            0.000000        0.0\n3           FL       12007   Bradford County, Florida               0.0            0.000000        0.0\n4           FL       12009    Brevard County, Florida               0.0            0.000000        0.0\n..         ...         ...                        ...               ...                 ...        ...\n221         GA       13313  Whitfield County, Georgia            4983.0           47.457143      105.0\n222         GA       13315     Wilcox County, Georgia               0.0            0.000000        3.0\n223         GA       13317     Wilkes County, Georgia               0.0            0.000000        4.0\n224         GA       13319  Wilkinson County, Georgia              67.0            8.375000        8.0\n225         GA       13321      Worth County, Georgia             102.0           14.571429        7.0\n\n[226 rows x 6 columns]"
       }
     }
   ]

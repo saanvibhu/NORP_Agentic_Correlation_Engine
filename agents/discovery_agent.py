@@ -10,7 +10,7 @@ from typing import Iterable
 import pandas as pd
 import requests
 
-from agents.base import DATA_RAW, AgentResult, load_csv, save_json, setup_logger
+from agents.base import DATA_PROCESSED, DATA_RAW, AgentResult, load_csv, save_json, setup_logger
 from agents.dataset_registry import SAMPLE_DATASETS, REAL_DATASETS, DatasetSpec, resolve_raw_path
 
 logger = setup_logger(__name__)
@@ -106,6 +106,10 @@ class DiscoveryAgent:
 
     def discover_spec(self, spec: DatasetSpec) -> DatasetRecord | None:
         path = resolve_raw_path(spec, self.raw_dir)
+        if not path.exists() and not self.use_real_data:
+            processed_path = DATA_PROCESSED / spec.processed_name
+            if processed_path.exists():
+                path = processed_path
         if not path.exists():
             if spec.name == "volunteer_cps":
                 # Optional — IRS provides volunteer metrics if CPS file absent

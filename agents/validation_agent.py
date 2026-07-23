@@ -8,6 +8,7 @@ from pathlib import Path
 import pandas as pd
 
 from agents.base import DATA_PROCESSED, AgentResult, load_csv, save_json, setup_logger
+from agents.config import PipelineConfig, load_config
 from agents.dataset_registry import JOIN_KEY, REAL_DATASETS, SAMPLE_DATASETS
 
 logger = setup_logger(__name__)
@@ -21,10 +22,14 @@ class QualityReport:
     quality_score: float
     missing_value_pct: float
     duplicate_count: int
+    duplicate_rate: float
     row_count: int
     column_count: int
     passed: bool
-    issues: list[str] = field(default_factory=list)
+    numeric_columns: list[str] = field(default_factory=list)
+    join_success_rate: float | None = None
+    failure_reasons: list[str] = field(default_factory=list)
+    recommended_corrective_action: str = "No corrective action required"
 
     def to_dict(self) -> dict:
         return {
@@ -32,10 +37,15 @@ class QualityReport:
             "quality_score": self.quality_score,
             "missing_value_pct": self.missing_value_pct,
             "duplicate_count": self.duplicate_count,
+            "duplicate_rate": self.duplicate_rate,
             "row_count": self.row_count,
             "column_count": self.column_count,
             "passed": self.passed,
-            "issues": self.issues,
+            "numeric_columns": self.numeric_columns,
+            "join_success_rate": self.join_success_rate,
+            "failure_reasons": self.failure_reasons,
+            "recommended_corrective_action": self.recommended_corrective_action,
+            "issues": self.failure_reasons,
         }
 
 
@@ -47,10 +57,12 @@ class ValidationAgent:
         processed_dir: Path | None = None,
         quality_threshold: float = DEFAULT_QUALITY_THRESHOLD,
         use_real_data: bool = True,
+        config: PipelineConfig | None = None,
     ):
         self.processed_dir = processed_dir or DATA_PROCESSED
         self.quality_threshold = quality_threshold
         self.use_real_data = use_real_data
+        self.config = config or load_config()
 
     def compute_quality_score(
         self,
@@ -76,7 +88,7 @@ class ValidationAgent:
         score = completeness_score * 0.5 + uniqueness_score * 0.3 + type_score * 0.2
         score = round(min(score, 100), 1)
 
-        if missing_pct > 20:
+        if missing_pct > self.config.maximum_missing_percentage:
             issues.append(f"High missing values: {missing_pct:.1f}%")
         if duplicate_count > 0:
             issues.append(f"{duplicate_count} duplicate rows detected")
@@ -87,17 +99,27 @@ class ValidationAgent:
         df = load_csv(path)
         duplicate_count = int(df.duplicated().sum())
         missing_pct = round(df.isnull().mean().mean() * 100, 2)
+        duplicate_rate = round(duplicate_count / max(len(df), 1) * 100, 2)
         score, issues = self.compute_quality_score(df, duplicate_count)
+        if len(df) < self.config.minimum_rows:
+            issues.append(f"Too few rows: {len(df)} (minimum {self.config.minimum_rows})")
+        if duplicate_rate > self.config.maximum_duplicate_percentage:
+            issues.append(f"Duplicate rate {duplicate_rate:.1f}% exceeds configured maximum")
+        passed = not issues and score >= self.quality_threshold
+        action = "No corrective action required" if passed else "Remove duplicates, address missing values, and provide more rows before analysis"
 
         report = QualityReport(
             dataset_name=path.stem,
             quality_score=score,
             missing_value_pct=missing_pct,
             duplicate_count=duplicate_count,
+            duplicate_rate=duplicate_rate,
             row_count=len(df),
             column_count=len(df.columns),
-            passed=score >= self.quality_threshold,
-            issues=issues,
+            passed=bool(passed),
+            numeric_columns=df.select_dtypes(include="number").columns.tolist(),
+            failure_reasons=issues,
+            recommended_corrective_action=action,
         )
         status = "PASSED" if report.passed else "DROPPED"
         logger.info(
